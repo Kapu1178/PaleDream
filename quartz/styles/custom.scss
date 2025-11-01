@@ -1,3 +1,80 @@
 @use "./base.scss";
+@use "./variables.scss" as *;
 
 // put your custom CSS here!
+.table-container {
+  overflow-x: auto;
+
+  & > table {
+    margin: 1rem;
+    padding: 1.5rem;
+    border-collapse: collapse;
+	box-sizing: border-box;
+
+	thead {
+		background-color: #652121;
+		tr {
+			border-bottom: none;
+		}
+	}
+
+	tbody {
+		tr {
+			border-bottom: none;
+			
+			&:nth-child(odd) {
+				background-color: rgba(6, 8, 12, 0.376);
+			}
+			
+			td:nth-child(2n+2) {
+				background-color: rgba(6, 8, 12, 0.376);
+			}
+
+		}
+	}
+
+	th {
+		color: rgb(229, 235, 238);
+		font-family: "Inter";
+		border-bottom: none;
+
+		&:nth-child(even) {
+			background-color: rgba(6, 8, 12, 0.376); //#06080c60
+		}
+	}
+
+	th,
+    td {
+      min-width: 75px;
+    }
+
+    & > * {
+      line-height: 1.3rem;
+    }
+  }
+}
+
+.center {
+	p {
+		overflow-wrap: break-word;
+		hyphens: none;
+	}
+}
+
+.page {
+	& article {
+		p,
+		li {
+			strong {
+				color: rgb(177, 126, 126);
+				font-weight: 900;
+			}
+		}
+	}
+}
+
+tbody,
+li,
+p {
+  line-height: 1.5rem;
+}

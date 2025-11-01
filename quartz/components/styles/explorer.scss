@@ -26,7 +26,26 @@
   }
 }
 
+.explorer-toggle {
+  h2 {
+    font-family: var(--bodyFont);
+  }
+  svg {
+    color: var(--tertiary);
+  }
+}
+
 .explorer {
+  --file-text-color: rgb(188, 202, 216);
+  --file-text-active-color: rgb(229, 235, 238);
+
+  --folder-text-color: rgb(188, 202, 216);
+  --folder-text-active-color: rgb(188, 202, 216);
+
+  --folder-icon-color: rgb(134, 55, 55);
+  --folder-icon-open-color: rgb(224, 88, 88);
+
+
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
@@ -97,7 +116,7 @@ button.desktop-explorer {
   text-align: left;
   cursor: pointer;
   padding: 0;
-  color: var(--dark);
+  color: var(--file-text-color);
   display: flex;
   align-items: center;
 
@@ -120,29 +139,37 @@ button.desktop-explorer {
     padding: 0;
     overscroll-behavior: contain;
 
-    & li > a {
-      color: var(--dark);
-      opacity: 0.75;
+    .file-item {
+      &:has(a.active),
+      &:has(a:hover) {
+        background: rgb(101, 33, 33);
+      }
+    }
+  
+    .file-container {
+      // padding-left: 0.8rem;
+    }
+
+    .file-title {
+      color: var(--file-text-color);
+      font-weight: 500;
       pointer-events: all;
 
-      &.active {
-        opacity: 1;
-        color: var(--tertiary);
+      &.active,
+      &:hover {
+        font-weight: bold;
+        color: var(--file-text-active-color) !important;
       }
     }
   }
 
   .folder-outer {
-    visibility: collapse;
     display: grid;
     grid-template-rows: 0fr;
-    transition-property: grid-template-rows, visibility;
-    transition-duration: 0.3s;
-    transition-timing-function: ease-in-out;
+    transition: grid-template-rows 0.3s ease-in-out;
   }
 
   .folder-outer.open {
-    visibility: visible;
     grid-template-rows: 1fr;
   }
 
@@ -160,17 +187,18 @@ button.desktop-explorer {
   align-items: center;
   user-select: none;
 
-  & div > a {
-    color: var(--secondary);
-    font-family: var(--headerFont);
-    font-size: 0.95rem;
-    font-weight: $semiBoldWeight;
+  .folder-title { // Folder links
+    color: var(--folder-text-color);
+    font-family: var(--bodyFont);
+    font-weight: 800; // ExtraBold
     line-height: 1.5rem;
     display: inline-block;
-  }
+    padding-left: 0.8em;
+    margin-left: -7px;
 
-  & div > a:hover {
-    color: var(--tertiary);
+    &:hover {
+      color: var(--folder-text-active-color) !important;
+    }
   }
 
   & div > button {
@@ -183,13 +211,12 @@ button.desktop-explorer {
     padding-right: 0;
     display: flex;
     align-items: center;
-    font-family: var(--headerFont);
+    font-family: var(--bodyFont);
 
     & span {
       font-size: 0.95rem;
       display: inline-block;
       color: var(--secondary);
-      font-weight: $semiBoldWeight;
       margin: 0;
       line-height: 1.5rem;
       pointer-events: none;
@@ -198,20 +225,24 @@ button.desktop-explorer {
 }
 
 .folder-icon {
-  margin-right: 5px;
-  color: var(--secondary);
+  color: var(--folder-icon-open-color);
   cursor: pointer;
   transition: transform 0.3s ease;
   backface-visibility: visible;
   flex-shrink: 0;
+  height: 14px;
+  width: 14px;
 }
 
 li:has(> .folder-outer:not(.open)) > .folder-container > svg {
-  transform: rotate(-90deg);
+  color: var(--folder-icon-color);
+  &:hover {
+    color: var(--file-text-active-color);
+  }
 }
 
 .folder-icon:hover {
-  color: var(--tertiary);
+  color: var(--file-text-active-color);
 }
 
 .explorer {
@@ -243,7 +274,7 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
       margin-top: 0;
       background-color: var(--light);
       max-width: 100vw;
-      width: 100vw;
+      width: 100%;
       transform: translateX(-100vw);
       transition:
         transform 200ms ease,
@@ -269,6 +300,6 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 
 .mobile-no-scroll {
   @media all and ($mobile) {
-    overscroll-behavior: none;
+    overflow: hidden;
   }
 }

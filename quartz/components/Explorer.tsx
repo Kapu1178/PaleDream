@@ -55,14 +55,11 @@ export type FolderState = {
   collapsed: boolean
 }
 
-let numExplorers = 0
 export default ((userOpts?: Partial<Options>) => {
   const opts: Options = { ...defaultOptions, ...userOpts }
   const { OverflowList, overflowListAfterDOMLoaded } = OverflowListFactory()
 
   const Explorer: QuartzComponent = ({ cfg, displayClass }: QuartzComponentProps) => {
-    const id = `explorer-${numExplorers++}`
-
     return (
       <div
         class={classNames(displayClass, "explorer")}
@@ -80,7 +77,7 @@ export default ((userOpts?: Partial<Options>) => {
           type="button"
           class="explorer-toggle mobile-explorer hide-until-loaded"
           data-mobile={true}
-          aria-controls={id}
+          aria-controls="explorer-content"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -119,31 +116,27 @@ export default ((userOpts?: Partial<Options>) => {
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
-        <div id={id} class="explorer-content" aria-expanded={false} role="group">
+        <div class="explorer-content" aria-expanded={false}>
           <OverflowList class="explorer-ul" />
         </div>
         <template id="template-file">
           <li>
-            <a href="#"></a>
+            <div class="file-item">
+              <div class='file-container'>
+                <a class="file-title" href="#"></a>
+              </div>
+            </div>
           </li>
         </template>
         <template id="template-folder">
           <li>
             <div class="folder-container">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="5 8 14 8"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="folder-icon"
-              >
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
+            <svg 
+              viewBox="0 0 100 100"
+              class="folder-icon"
+            >
+              <path d="M43.75 12.5l12.5 12.5h43.75v68.75H0V12.5z" fill="currentColor"/>
+            </svg>
               <div>
                 <button class="folder-button">
                   <span class="folder-title"></span>
